@@ -10,8 +10,9 @@ using std::cout;
 */
 Game::Game()
 {
-	
+	serialInterface = new SerialInterfaceA();
 }
+
 
 /*
 	Decontructor - also not used in this case
@@ -64,6 +65,8 @@ bool Game::init(const char * title, int xpos, int ypos, int width, int height, i
 	isRunning = true;
 	cout << "SDL init success \n";
 
+
+
 	return true;
 }
 
@@ -76,6 +79,15 @@ void Game::render()
 	SDL_RenderClear(mainRenderer);
 
 	// draw to the screen here!
+	SDL_Rect player1;
+	player1.x = 50;
+	player1.y = serialInterface->getPot1();
+
+	player1.w = 30;
+	player1.h = 80;
+
+	SDL_SetRenderDrawColor(mainRenderer, 255, 0, 0, 255);
+	SDL_RenderFillRect(mainRenderer, &player1);
 	
 	// render new frame
 	SDL_RenderPresent(mainRenderer);
@@ -87,7 +99,7 @@ void Game::render()
 */
 void Game::update()
 {
-	
+	serialInterface->getPositions();
 }
 
 /*
